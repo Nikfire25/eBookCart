@@ -9,7 +9,7 @@ export const login = async (authDetail) => {
     requestOptions
   );
   if (!res.ok) {
-    throw { message: res.statusText, status: res.status };
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
   const data = await res.json();
   return data;
@@ -26,7 +26,7 @@ export const register = async (authDetail) => {
     requestOptions
   );
   if (!res.ok) {
-    throw { message: res.statusText, status: res.status };
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
   const data = await res.json();
   return data;
