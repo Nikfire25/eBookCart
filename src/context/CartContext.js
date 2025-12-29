@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
     });
   }
   function clearCart() {
-    dispatch({ type: "CLEAR_CART", payload: { product: [], total: 0 } });
+    dispatch({ type: "CLEAR_CART", payload: { products: [], total: 0 } });
   }
   const value = {
     cartList: state.cartList,
