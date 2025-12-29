@@ -1,52 +1,73 @@
+// utils/api.js
+
+const getAuthData = () => {
+  const token = JSON.parse(sessionStorage.getItem("token") || "null");
+  const ebid = JSON.parse(sessionStorage.getItem("ebid") || "null");
+
+  if (!token || !ebid) {
+    throw new Error("User not authenticated");
+  }
+
+  return { token, ebid };
+};
+
+// ==========================
+// GET USER
+// ==========================
 export const getUser = async () => {
-  const token = JSON.parse(sessionStorage.getItem("token"));
-  const ebid = JSON.parse(sessionStorage.getItem("ebid"));
-  const requestOptions = {
+  const { token, ebid } = getAuthData();
+
+  const res = await fetch(`${process.env.REACT_APP_HOST}/600/users/${ebid}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  };
-  const res = await fetch(
-    `${process.env.REACT_APP_HOST}/600/users/${ebid}`,
-    requestOptions
-  );
+  });
 
   if (!res.ok) {
-    throw { message: res.statusText, status: res.status };
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
 
-  const data = await res.json();
-  return data;
+  return await res.json();
 };
 
+// ==========================
+// GET USER ORDERS
+// ==========================
 export const getUserOrders = async () => {
-  const token = JSON.parse(sessionStorage.getItem("token"));
-  const ebid = JSON.parse(sessionStorage.getItem("ebid"));
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const { token, ebid } = getAuthData();
+
   const res = await fetch(
-    `${process.env.REACT_APP_HOST}/660/orders/?user.id=${ebid}`,
-    requestOptions
+    `${process.env.REACT_APP_HOST}/660/orders?user.id=${ebid}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
+
   if (!res.ok) {
-    throw { message: res.statusText, status: res.status };
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
-  const data = await res.json();
-  return data;
+
+  return await res.json();
 };
 
+// ==========================
+// CREATE ORDER
+// ==========================
 export const createOrder = async (cartList, total, user) => {
-  if (cartList.length === 0) {
+  if (!cartList || cartList.length === 0) {
     alert("Cart is empty");
     return;
   }
-  const token = JSON.parse(sessionStorage.getItem("token"));
+
+  const token = JSON.parse(sessionStorage.getItem("token") || "null");
+  if (!token) {
+    throw new Error("User not authenticated");
+  }
+
   const order = {
     cartList,
     total,
@@ -56,24 +77,21 @@ export const createOrder = async (cartList, total, user) => {
       name: user.name,
       email: user.email,
     },
+    createdAt: new Date().toISOString(),
   };
 
-  const requestOptions = {
+  const res = await fetch(`${process.env.REACT_APP_HOST}/660/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(order),
-  };
-  const res = await fetch(
-    `${process.env.REACT_APP_HOST}/660/orders`,
-    requestOptions
-  );
+  });
 
   if (!res.ok) {
-    throw { message: res.statusText, status: res.status };
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
-  const data = await res.json();
-  return data;
+
+  return await res.json();
 };
