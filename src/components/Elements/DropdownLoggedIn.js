@@ -22,7 +22,6 @@ export const DropdownLoggedIn = ({ setDropDown }) => {
     };
     fetchUser();
   }, [ebid, token]);
-  console.log(user);
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
