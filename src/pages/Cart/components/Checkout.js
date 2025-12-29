@@ -39,7 +39,7 @@ export const Checkout = ({ setCheckout }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const data = await createOrder(cartList, toast, user);
+      const data = await createOrder(cartList, total, user);
       toast.success("Order Placed");
       clearCart();
       navigate("/order-summary", {
