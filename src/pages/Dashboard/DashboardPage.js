@@ -14,7 +14,7 @@ export const DashboardPage = () => {
         const data = await getUserOrders();
         setOrders(data);
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error);
       }
     };
     fetchOrders();

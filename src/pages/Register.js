@@ -24,7 +24,7 @@ export const Register = () => {
       }
       navigate("/products");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error);
     }
   };
 

@@ -20,7 +20,7 @@ export const Login = () => {
         sessionStorage.setItem("ebid", JSON.stringify(data.user.id));
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error);
     }
   };
   return (

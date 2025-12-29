@@ -21,7 +21,7 @@ export const ProductsList = () => {
         const data = await getProductList(searchTerm);
         initialProductList(data);
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error);
       }
     }
     fetchProducts();

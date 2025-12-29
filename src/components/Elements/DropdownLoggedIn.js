@@ -17,7 +17,7 @@ export const DropdownLoggedIn = ({ setDropDown }) => {
         const data = await getUser();
         setUser(data);
       } catch (error) {
-        toast.error(error.messagge);
+        toast.error(error);
       }
     };
     fetchUser();
