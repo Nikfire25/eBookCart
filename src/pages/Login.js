@@ -10,8 +10,8 @@ export const Login = () => {
   const handleLoginGuest = async () => {
     try {
       const authDetail = {
-        email: process.env.REACT_APP_EMAIL,
-        password: process.env.REACT_APP_PASSWORD,
+        email: "guest@gmail.com",
+        password: "password",
       };
 
       const data = await login(authDetail);
