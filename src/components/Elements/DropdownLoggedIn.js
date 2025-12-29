@@ -6,12 +6,10 @@ import { getUser } from "../../services";
 import { toast } from "react-toastify";
 export const DropdownLoggedIn = ({ setDropDown }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const ebid = JSON.parse(sessionStorage.getItem("ebid"));
   const token = JSON.parse(sessionStorage.getItem("token"));
   useEffect(() => {
     if (!ebid || !token) {
-      setLoading(false);
       return;
     }
     const fetchUser = async () => {
@@ -20,8 +18,6 @@ export const DropdownLoggedIn = ({ setDropDown }) => {
         setUser(data);
       } catch (error) {
         toast.error(error.messagge);
-      } finally {
-        setLoading(false);
       }
     };
     fetchUser();
