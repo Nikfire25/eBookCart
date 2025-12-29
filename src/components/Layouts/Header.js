@@ -46,9 +46,9 @@ export const Header = () => {
             ></span>
             <Link to="/cart" className="text-gray-700 dark:text-white mr-5">
               <span className="text-2xl bi bi-cart-fill relative">
-                {cartList.length >= 1 && (
+                {cartList?.length >= 1 && (
                   <span className="text-white text-sm absolute -top-1 left-2.5 bg-rose-500 px-1 rounded-full ">
-                    {cartList.length}
+                    {cartList?.length}
                   </span>
                 )}
               </span>
